@@ -1,7 +1,11 @@
-from display import *
+from interface import *
 from maze import *
 from solver import *
 from runner import *
+
+import sys
+import pygame
+from pygame.locals import *
 
 
 def main():
@@ -9,8 +13,11 @@ def main():
     maze = Maze()
     solver = Solver()
     runner = Runner(display, maze, solver)
+
+    clock = pygame.time.Clock()
     
-    while runner.still_running():
+    while True:
+        clock.tick(60)
         runner.get_updates()
         runner.push_updates()
 
