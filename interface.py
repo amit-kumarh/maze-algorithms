@@ -2,6 +2,11 @@ import sys
 import pygame
 from pygame.locals import *
 
+white = (255, 255, 255)
+green = (0, 255, 0)
+blue = (0, 0, 128)
+black = (0,0,0)
+
 class Interface:
     def __init__(self) -> None:
         pygame.init()
@@ -11,25 +16,25 @@ class Interface:
         pygame.display.set_caption("Maze Algorithms")
 
         # create internal pygame window
-        DISPLAY_SIZE = (640, 480)
+        DISPLAY_SIZE = (600, 400)
         self.display = pygame.Surface(DISPLAY_SIZE)
         
         self.events = pygame.event.get()
+
+        self.font = pygame.font.Font('freesansbold.ttf', 16)
 
     def refresh_window(self):
         """
         Refresh and draw the screen
         """
-
-        for event in self.events:
-            if event.type == QUIT:
-                pygame.quit()
-                sys.exit()
-
+        self.screen.fill(black)
         new_window_size, center_cords = self.adjust_scale()
         # scale internal display to match window)
         new_disp = pygame.transform.scale(self.display, new_window_size)
         self.screen.blit(new_disp, center_cords)
+
+        
+
         pygame.display.update()
 
     def adjust_scale(self):
@@ -63,5 +68,29 @@ class Interface:
 
     def get_updates(self) -> None:
         self.events = pygame.event.get()
+
+    def push_updates(self) -> None:
+        for event in self.events:
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+        
+        self.draw_main()
+
+        self.refresh_window()
+
+    def draw_main(self) -> None:
+        # self.display.fill(white)
+
+        title = self.font.render('Maze Algorithms', True, black, white)
+        title_rect = title.get_rect()
+        title_rect.center = (50,50)
+
+        self.display.blit(title, title_rect)
+
+
+
+
+        
 
     

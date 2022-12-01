@@ -16,7 +16,7 @@ class Runner():
         self.interface.get_updates()
     
     def push_updates(self) -> None:
-        self.interface.refresh_window()
+        self.interface.push_updates()
 
 
 
