@@ -56,18 +56,3 @@ class Solver:
                   ]
 
     n_algos = len(algorithms)
-
-
-    @staticmethod
-    def generate_sample_path():
-
-        path = []
-
-        for y in range(Maze.size[1]-1):
-            path.append((0,y))
-
-        for x in range(Maze.size[0]-1):
-            path.append((x,Maze.size[1]-1))
-
-        return path
-
