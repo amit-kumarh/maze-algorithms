@@ -2,10 +2,16 @@ import sys
 import pygame
 from pygame.locals import *
 
+from maze import Maze
+
 white = (255, 255, 255)
 green = (0, 255, 0)
 blue = (0, 0, 128)
 black = (0,0,0)
+light_grey = (206, 219, 211)
+dark_grey = (180, 84, 82)
+
+BLOCK_SIZE = 10
 
 class Interface:
     def __init__(self) -> None:
@@ -16,12 +22,10 @@ class Interface:
         pygame.display.set_caption("Maze Algorithms")
 
         # create internal pygame window
-        DISPLAY_SIZE = (600, 400)
+        DISPLAY_SIZE = (BLOCK_SIZE*100, BLOCK_SIZE*75)
         self.display = pygame.Surface(DISPLAY_SIZE)
         
         self.events = pygame.event.get()
-
-        self.font = pygame.font.Font('freesansbold.ttf', 16)
 
     def refresh_window(self):
         """
@@ -69,24 +73,62 @@ class Interface:
     def get_updates(self) -> None:
         self.events = pygame.event.get()
 
-    def push_updates(self) -> None:
+    def push_updates(self, maze) -> None:
         for event in self.events:
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
         
-        self.draw_main()
+        self.draw_main(maze)
 
         self.refresh_window()
 
-    def draw_main(self) -> None:
-        # self.display.fill(white)
+    def get_x_center(self) -> int :
+        return self.display.get_size()[0]/2
 
-        title = self.font.render('Maze Algorithms', True, black, white)
+
+    def draw_maze(self, maze: Maze):
+        maze_size = (BLOCK_SIZE*maze.size[0], BLOCK_SIZE*maze.size[1])
+
+        border_size = (maze_size[0]+2*BLOCK_SIZE, maze_size[1] +2*BLOCK_SIZE)
+
+        maze_x = ((self.display.get_size()[0] - BLOCK_SIZE*maze.size[0])/2)
+        maze_y = 100
+        maze_background = pygame.Rect((maze_x,maze_y),maze_size)
+
+        border = pygame.Rect((maze_x - BLOCK_SIZE, maze_y - BLOCK_SIZE), border_size)
+
+        pygame.draw.rect(self.display, dark_grey, border)
+
+        pygame.draw.rect(self.display, light_grey, maze_background)
+
+        # draw lines
+        for row_idx, row in enumerate(maze.grid):
+            for col_idx, col in enumerate(row):
+                if col:
+                    # draw square
+                    wall_loc = (maze_y + BLOCK_SIZE*row_idx, maze_x + BLOCK_SIZE*col_idx)
+                    wall_size = (BLOCK_SIZE, BLOCK_SIZE)
+                    wall = pygame.Rect(wall_loc, wall_size)
+                    pygame.draw.rect(self.display, black, wall)
+
+
+        
+
+    def draw_main(self, maze) -> None:
+
+        self.display.fill(light_grey)
+
+        title = pygame.font.Font('freesansbold.ttf', 30).render('Maze Algorithms', True, black, light_grey)
         title_rect = title.get_rect()
-        title_rect.center = (50,50)
+        title_rect.center = (self.get_x_center(), 50)
+
+
+        self.draw_maze(maze)
+       
 
         self.display.blit(title, title_rect)
+        
 
 
 
