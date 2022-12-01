@@ -14,11 +14,6 @@ class Runner():
 
     def get_updates(self) -> None:
         self.interface.get_updates()
-
-        for event in self.interface.events:
-            if event.type == QUIT:
-                pygame.quit()
-                sys.exit()
     
     def push_updates(self) -> None:
         self.interface.refresh_window()

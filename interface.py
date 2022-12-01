@@ -20,6 +20,12 @@ class Interface:
         """
         Refresh and draw the screen
         """
+
+        for event in self.events:
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+
         new_window_size, center_cords = self.adjust_scale()
         # scale internal display to match window)
         new_disp = pygame.transform.scale(self.display, new_window_size)
@@ -57,3 +63,5 @@ class Interface:
 
     def get_updates(self) -> None:
         self.events = pygame.event.get()
+
+    
