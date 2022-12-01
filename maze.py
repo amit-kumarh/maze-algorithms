@@ -1,6 +1,6 @@
 import collections
 
-ADJACENT = [1, 0, -1]
+ADJACENT = ((1, 0), (-1, 0), (0, 1), (0, -1))
 
 class Maze():
     def __init__(self):
@@ -8,35 +8,32 @@ class Maze():
         self.start = (0,0)
         self.end = (2,2)
 
-    def _getValidMoves(self, cell):
+    def _getValidMoves(self, cell, visited):
         neighbors = []
-        for i in ADJACENT:
-            for j in ADJACENT:
-                if i == j == 0:
-                    continue
+        for i, j in ADJACENT:
+            row = cell[0] + i
+            col = cell[1] + j
+            if row not in range(0, self.end[0]+1) or col not in range(0, self.end[1]+1):
+                continue
 
-                row = cell[0] + i
-                col = cell[1] + j
-                if i not in range(0, self.end[0]) or j not in range(0, self.end[1]):
-                    continue
-
-                print(row, col)
-                if self.maze[row][col] == 0:
-                    neighbors.append((row, col))
+            if self.maze[row][col] == 0 and (row, col) not in visited:
+                neighbors.append((row, col))
 
         return neighbors
 
     def solve(self):
+        visited = set() 
         queue = collections.deque()
         queue.append((0,0))
 
         while queue:
             curr = queue.pop()
+            visited.add(curr)
             if curr == self.end:
-                print("Reached the End")
+                print("Reached the end")
                 break
 
-            moves = self._getValidMoves(curr)
+            moves = self._getValidMoves(curr, visited)
             for move in moves:
                 queue.append(move)
 
