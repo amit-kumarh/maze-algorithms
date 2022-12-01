@@ -21,7 +21,7 @@ class Runner():
                 sys.exit()
     
     def push_updates(self) -> None:
-        self.interface.refresh_window
+        self.interface.refresh_window()
 
 
 
