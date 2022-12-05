@@ -36,10 +36,9 @@ class Interface:
         self.screen.fill(black)
         new_window_size, center_cords = self.adjust_scale()
         # scale internal display to match window)
+
         new_disp = pygame.transform.scale(self.display, new_window_size)
         self.screen.blit(new_disp, center_cords)
-
-        
 
         pygame.display.update()
 
@@ -100,7 +99,7 @@ class Interface:
 
         border_size = (maze_size[0]+2*BLOCK_SIZE, maze_size[1] +2*BLOCK_SIZE)
 
-        maze_x = ((self.display.get_size()[0] - BLOCK_SIZE*Maze.size[0])/2)
+        maze_x = float(float(self.display.get_size()[0] - BLOCK_SIZE*Maze.size[0])/2)
         maze_y = 100
         maze_background = pygame.Rect((maze_x,maze_y),maze_size)
 
@@ -115,7 +114,7 @@ class Interface:
             for col_idx, col in enumerate(row):
                 if col:
                     # draw square
-                    wall_loc = (maze_y + BLOCK_SIZE*row_idx, maze_x + BLOCK_SIZE*col_idx)
+                    wall_loc = (maze_x + BLOCK_SIZE*row_idx, maze_y + BLOCK_SIZE*col_idx)
                     wall_size = (BLOCK_SIZE, BLOCK_SIZE)
                     wall = pygame.Rect(wall_loc, wall_size)
                     pygame.draw.rect(self.display, black, wall)
@@ -134,7 +133,8 @@ class Interface:
                 thickness = BLOCK_SIZE/1.5
 
                 y_offset = 100 + (BLOCK_SIZE-thickness)/2 
-                x_offset = ((self.display.get_size()[0] - BLOCK_SIZE*Maze.size[0])/2) + (BLOCK_SIZE-thickness)/2 
+                x_offset = ((self.display.get_size()[0] - BLOCK_SIZE*Maze.size[0])/2) + (BLOCK_SIZE-thickness)/2 +1
+
 
                 line_loc = (min(point1[0], point2[0]) + x_offset, min(point1[1], point2[1])+ y_offset)
 
