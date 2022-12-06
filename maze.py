@@ -1,14 +1,17 @@
+import collections
 import numpy as np
 import random
 
 class Maze():
-    size = (80,50)
+    size = (79,49)
     maze = [[True]*size[0]] * size[1]
 
     def __init__(self):
-        
-        self.grid = self.get_random_maze()
+        self.grid = Maze.get_maze_from_text("./sample.txt")
+        self.start = (0, 0)
+        self.end = (Maze.size[0]-1, Maze.size[1]-1)
 
+    @staticmethod
     def get_random_maze(self) -> "list[list[bool]]":
         
         x = random.randrange(self.size[0])
@@ -35,3 +38,21 @@ class Maze():
 
 
         
+    def get_maze_from_text(filename: str):
+        maze = np.zeros((Maze.size))
+        with open(filename) as f:
+            for row_idx, row in enumerate(f.readlines()):
+                for col_idx, col in enumerate(row):
+                    if col == "#":
+                        maze[col_idx][row_idx] = 1
+                        
+        
+        return maze
+
+    
+
+if __name__ == '__main__':
+    maze = Maze()
+    maze.solve()
+        
+
