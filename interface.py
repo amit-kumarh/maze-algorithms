@@ -1,6 +1,7 @@
 import sys
 import pygame
 from pygame.locals import *
+import numpy as np
 
 from maze import Maze
 from solver import Solver
@@ -123,32 +124,43 @@ class Interface:
 
     def draw_solution(self, solution) -> None:
         if solution != None:
-            for idx, val in enumerate(solution[0:-1]):
-                point1 = val
-                point2 = solution[idx+1]
-
-                point1 = (point1[0]*BLOCK_SIZE, point1[1]*BLOCK_SIZE)
-                point2 = (point2[0]*BLOCK_SIZE, point2[1]*BLOCK_SIZE)
-
-                thickness = BLOCK_SIZE/1.5
-
-                y_offset = 100 + (BLOCK_SIZE-thickness)/2 
-                x_offset = ((self.display.get_size()[0] - BLOCK_SIZE*Maze.size[0])/2) + (BLOCK_SIZE-thickness)/2 +1
+            grid = solution
 
 
-                line_loc = (min(point1[0], point2[0]) + x_offset, min(point1[1], point2[1])+ y_offset)
-
-
-                if point1[0] == point2[0]:
-                    line_size = (thickness, BLOCK_SIZE)
-                else:
-                    line_size = (BLOCK_SIZE,thickness)
-
-
-                line = pygame.Rect(line_loc, line_size)
-
-                pygame.draw.rect(self.display, red, line)
         
+            thickness = BLOCK_SIZE/1.5
+
+            for row_idx, row in enumerate(grid[0:-1]):
+                for col_idx, col in enumerate(row[0:-1]):
+                    current_point = grid[row_idx][ col_idx]
+                    right_point = grid[row_idx][col_idx+1]
+                    down_point = grid[row_idx+1][col_idx]
+
+                    y_offset = 100 + (BLOCK_SIZE-thickness)/2
+                    x_offset = ((self.display.get_size()[0] - BLOCK_SIZE*Maze.size[0])/2)+ (BLOCK_SIZE-thickness)/2
+
+                    line_loc = (BLOCK_SIZE*col_idx + x_offset, BLOCK_SIZE*row_idx+ y_offset)
+                    # current point is visited
+                    if current_point == 1:
+                        if right_point == 1:
+                            line_size = (BLOCK_SIZE+thickness, thickness)
+                            line = pygame.Rect(line_loc, line_size)
+
+                            pygame.draw.rect(self.display, red, line)
+                            
+                        if down_point == 1:
+                            line_size = (thickness, BLOCK_SIZE+thickness)
+                            line = pygame.Rect(line_loc, line_size)
+
+                            pygame.draw.rect(self.display, red, line)
+                           
+
+                        
+
+
+
+        
+
     def draw_algos(self, cur_algo) -> None:
         n_items = Solver.n_algos
         item_width = BLOCK_SIZE*Maze.size[0]/(n_items+1)

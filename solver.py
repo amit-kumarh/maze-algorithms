@@ -2,6 +2,7 @@ from maze import Maze
 import matplotlib.pyplot as plt
 import collections
 import random
+import numpy as np
 
 
 ADJACENT = {'N': (1, 0), 'S': (-1, 0), 'E':(0, 1), 'W':(0, -1)}
@@ -20,10 +21,10 @@ def getValidMoves(maze, cell):
     return neighbors
 
 class Solver:
-
     @staticmethod
-    def bfs(maze: Maze) -> "list[tuple(int, int)]":
+    def bfs(maze: Maze) -> "list[list[int]]":
         visited = {}
+        path = [[0 for i in range(Maze.size[0])]for j in range(Maze.size[1])]
         queue = collections.deque()
         queue.append((0,0))
 
@@ -39,12 +40,11 @@ class Solver:
                     queue.append(move)
                     visited[move] = curr
 
-        path = []
-        path.append(visited[curr])
+        path[curr[1]][curr[0]] = 1
         while curr != maze.start:
-            path.append(curr := visited[curr])
+           path[curr[1]][curr[0]] = 1
+           curr = visited[curr]
 
-        path = list(reversed(path))
         return path
 
     @staticmethod
