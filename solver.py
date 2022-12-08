@@ -5,7 +5,7 @@ import random
 import numpy as np
 
 
-ADJACENT = {'N': (1, 0), 'S': (-1, 0), 'E':(0, 1), 'W':(0, -1)}
+ADJACENT = {'N': (0, -1), 'S': (0, 1), 'E':(1, 0), 'W':(-1, 0)}
 def getValidMoves(maze, cell):
     neighbors = {}
     dirs = []
@@ -31,7 +31,6 @@ class Solver:
         while queue:
             curr = queue.pop()
             if curr == maze.end:
-                print('Reached End')
                 break
 
             moves = getValidMoves(maze, curr)
@@ -55,17 +54,19 @@ class Solver:
         path.append(curr)
         while curr != maze.end:
             neighbors = getValidMoves(maze, curr)
-            if dir not in neighbors:
+            if len(neighbors) > 2 or dir not in neighbors:
                 dir = random.choice(list(neighbors.keys()))
                 curr = neighbors[dir]
             else:
                 curr = neighbors[dir]
 
             path.append(curr)
-            plt.pcolormesh(maze.grid)
 
+        grid = [[0 for i in range(maze.size[0])] for j in range(maze.size[1])]
+        for x, y in path:
+            grid[y][x] = 1
         print(len(path))
-        return list(set(path))
+        return grid
 
 
         
