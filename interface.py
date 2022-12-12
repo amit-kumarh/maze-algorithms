@@ -122,12 +122,9 @@ class Interface:
 
 
 
-    def draw_solution(self, solution) -> None:
+    def draw_solution(self, solution, duration) -> None:
         if solution != None:
             grid = solution
-
-
-        
             thickness = BLOCK_SIZE/1.5
 
             for row_idx, row in enumerate(grid[0:-1]):
@@ -153,13 +150,11 @@ class Interface:
                             line = pygame.Rect(line_loc, line_size)
 
                             pygame.draw.rect(self.display, red, line)
-                           
 
-                        
-
-
-
-        
+            dur_label = pygame.font.Font('freesansbold.ttf', 30).render(f"Duration: {duration:.2f}ms", True, white, dark_grey)
+            dur_rect = dur_label.get_rect()
+            dur_rect.center = (220, 15)
+            self.display.blit(dur_label, (0, 0))
 
     def draw_algos(self, cur_algo) -> None:
         n_items = Solver.n_algos
@@ -196,7 +191,7 @@ class Interface:
         self.draw_maze(maze)
         
         self.draw_algos(cur_algo)
-        self.draw_solution(solution)
+        self.draw_solution(*solution)
         
        
 

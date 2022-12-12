@@ -1,6 +1,7 @@
 from interface import *
 from maze import *
 from solver import *
+from time import perf_counter
 
 class Runner():
     def __init__(self, interface: Interface, maze: Maze, solver: Solver) -> None:
@@ -9,7 +10,7 @@ class Runner():
 
         self.cur_algo = 0
         self.algo_selected = False
-        self.solution = None
+        self.solution = (None, 0)
 
 
     def get_updates(self) -> None:
