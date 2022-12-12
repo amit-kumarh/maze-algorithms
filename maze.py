@@ -4,12 +4,9 @@ import random
 import collections
 
 class Maze():
-    size = (79,49)
-    maze = [[True]*size[0]] * size[1]
-
+    size = (5,7)
     def __init__(self):
-        # self.grid = Maze.get_random_maze(Maze) 
-        self.grid = Maze.get_maze_from_text("./sample.txt")
+        self.grid = eval(open('demo_maze.txt', 'r').read())
         self.start = (0, 0)
         self.end = (Maze.size[0]-1, Maze.size[1]-1)
 
