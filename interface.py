@@ -125,6 +125,7 @@ class Interface:
     def draw_solution(self, solution, duration) -> None:
         if solution != None:
             grid = solution
+        
             thickness = BLOCK_SIZE/1.5
 
             for row_idx, row in enumerate(grid[0:-1]):
@@ -155,7 +156,7 @@ class Interface:
             dur_rect = dur_label.get_rect()
             dur_rect.center = (220, 15)
             self.display.blit(dur_label, (0, 0))
-
+                    
     def draw_algos(self, cur_algo) -> None:
         n_items = Solver.n_algos
         item_width = BLOCK_SIZE*Maze.size[0]/(n_items+1)

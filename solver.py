@@ -49,7 +49,6 @@ class Solver:
         duration = (perf_counter() - start)*1000
         return grid, duration
 
-    @staticmethod
     def mouse(maze: Maze) -> "list[tuple(int, int)]":
         start = perf_counter()
         curr = maze.start
@@ -73,24 +72,21 @@ class Solver:
         return grid, duration
 
 
-        
-    @staticmethod
-    def algo_3(maze: Maze) -> "list[tuple(int, int)]":
-        path = []
-
-        for y in range(maze.size[1]-1):
-            path.append((0,y))
-
-        for x in range(maze.size[0]-1):
-            path.append((x,maze.size[1]-1))
+    def wall_follow(maze: Maze) -> "list[tuple(int, int)]":
+        start = perf_counter()
+        path = [[0 for i in range(Maze.size[0])]for j in range(Maze.size[1])]
 
         
 
-        return path
+        curr = maze.start
+
+        duration = (perf_counter() - start)*1000
+        return path, duration
+
     
     algorithms = [
                   ("bfs", bfs.__get__(object)), 
                   ("mouse", mouse.__get__(object)), 
-                  ("algo 3", algo_3.__get__(object)),
+                  ("wall follow", wall_follow.__get__(object)),
                   ]
     n_algos = len(algorithms)

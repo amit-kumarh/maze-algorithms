@@ -7,11 +7,11 @@ class Maze():
     maze = [[True]*size[0]] * size[1]
 
     def __init__(self):
-        self.grid = Maze.get_random_maze() #Maze.get_maze_from_text("./sample.txt")
+        # self.grid = Maze.get_random_maze(Maze) 
+        self.grid = Maze.get_maze_from_text("./sample.txt")
         self.start = (0, 0)
         self.end = (Maze.size[0]-1, Maze.size[1]-1)
 
-    @staticmethod
     def get_random_maze(self) -> "list[list[bool]]":
         
         x = random.randrange(self.size[0])

@@ -11,9 +11,7 @@ from pygame.locals import *
 def main():
     display = Interface()
     maze = Maze()
-    solver = Solver()
-    runner = Runner(display, maze, solver)
-
+    runner = Runner(display, maze)
     clock = pygame.time.Clock()
     
     while True:
