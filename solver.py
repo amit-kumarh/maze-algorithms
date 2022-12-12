@@ -1,4 +1,5 @@
 from maze import Maze
+from grapher import graph
 import matplotlib.pyplot as plt
 import collections
 import random
@@ -32,14 +33,16 @@ class Solver:
 
         while queue:
             curr = queue.pop()
+            graph([curr])
             if curr == maze.end:
                 break
 
             moves = getValidMoves(maze, curr)
             for move in moves.values():
                 if move not in visited:
-                    queue.append(move)
+                    queue.appendleft(move)
                     visited[move] = curr
+
 
         grid[curr[1]][curr[0]] = 1
         while curr != maze.start:
@@ -94,3 +97,9 @@ class Solver:
                   ("algo 3", algo_3.__get__(object)),
                   ]
     n_algos = len(algorithms)
+
+if __name__ == "__main__":
+    maze = Maze()
+    print(maze.grid)
+    sol = Solver()
+    sol.bfs(maze)
