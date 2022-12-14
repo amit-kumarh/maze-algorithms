@@ -43,7 +43,7 @@ class Maze():
         grid  = [[1 for _ in range(Maze.size[1])]for _ in range(Maze.size[0])]
         
         
-        current = (random.randint(0,maze_x), random.randint(0,maze_y), "S")
+        current = (random.randint(0,maze_x-1), random.randint(0,maze_y-1), "S")
         visited = []
         path = []
 
@@ -83,22 +83,22 @@ class Maze():
             grid_x = 2*x + 1
             grid_y = 2*y + 1
             if dir == "N":
-                # print(grid_x,grid_y)
                 grid[grid_x][grid_y] = 0
                 grid[grid_x][grid_y+1] = 0
             elif dir == "E":
-                # print(grid_x,grid_y)
                 grid[grid_x][grid_y] = 0
                 grid[grid_x-1][grid_y] = 0
             elif dir == "S":
-                # print(grid_x,grid_y)
                 grid[grid_x][grid_y] = 0
                 grid[grid_x][grid_y-1] = 0
             elif dir == "W":
-                # print(grid_x,grid_y)
                 grid[grid_x][grid_y] = 0
                 grid[grid_x + 1][grid_y] = 0
 
+        grid[0][0] = 0
+        grid[1][0] = 0
+        grid[Maze.size[0]-1][Maze.size[1]-1] = 0
+        grid[Maze.size[0]-2][Maze.size[1]-1] = 0
 
 
         return grid

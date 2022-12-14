@@ -134,6 +134,7 @@ class Interface:
     def draw_solution(self, solution, duration) -> None:
         if solution != None:
             grid = solution
+
         
             thickness = BLOCK_SIZE/1.5
 
@@ -160,6 +161,12 @@ class Interface:
                             line = pygame.Rect(line_loc, line_size)
 
                             pygame.draw.rect(self.display, red, line)
+            
+            # fix thing that I don't know why doen't fix self
+            last_line_size = (BLOCK_SIZE+thickness, thickness)
+            last_line_loc = (BLOCK_SIZE*(Maze.size[0]-2) + x_offset,  BLOCK_SIZE*(Maze.size[1]-1)+ y_offset)
+            last_line = pygame.Rect(last_line_loc, last_line_size)
+            pygame.draw.rect(self.display, red, last_line)
 
             dur_label = pygame.font.Font('freesansbold.ttf', 30).render(f"Duration: {duration:.2f}ms", True, white, dark_grey)
             dur_rect = dur_label.get_rect()

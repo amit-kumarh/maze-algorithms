@@ -42,6 +42,7 @@ class Solver:
                     visited[move] = curr
 
         grid[curr[1]][curr[0]] = 1
+        grid[0][0] = 1
         while curr != maze.start:
            grid[curr[1]][curr[0]] = 1
            curr = visited[curr]
@@ -80,7 +81,7 @@ class Solver:
         curr = maze.start
 
         direction = "N"
-
+        path[curr[1]][curr[0]] = 1
         while curr != maze.end:
 
             if direction == "S":
