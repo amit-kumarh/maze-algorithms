@@ -16,5 +16,5 @@ def graph(points=[]):
     plt.show()
 
 if __name__ == '__main__':
-    graph()
+    graph([(0, 0), (1, 0)])
 
