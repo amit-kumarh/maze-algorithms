@@ -75,61 +75,58 @@ class Solver:
     @staticmethod
     def wall_follow(maze: Maze) -> "list[tuple(int, int)]":
         start = perf_counter()
-        path = [[0 for i in range(Maze.size[0])]for j in range(Maze.size[1])]
+        path = [[0 for _ in range(Maze.size[0])]for _ in range(Maze.size[1])]
 
         curr = maze.start
 
-        direction = "S"
+        direction = "N"
 
         while curr != maze.end:
 
-            print(curr)
-            print(direction)
-            print(getValidMoves(maze, curr).values())
-
-
             if direction == "S":
 
-                front_cell = (curr[0],curr[1]-1)
+                front_cell = (curr[0],curr[1]+1)
                 right_cell = (curr[0]-1, curr[1])
                 if right_cell in getValidMoves(maze, curr).values():
                     direction = "W"
+                    curr = right_cell
                 elif front_cell in getValidMoves(maze, curr).values():
                     curr = front_cell
                 else:
                     direction = "E"
-                continue
-            if direction == "E":
+            elif direction == "E":
                 front_cell = (curr[0]+1, curr[1])
-                right_cell = (curr[0], curr[1]-1)
+                right_cell = (curr[0], curr[1]+1)
                 if right_cell in getValidMoves(maze, curr).values():
                     direction = "S"
+                    curr = right_cell
                 elif front_cell in getValidMoves(maze, curr).values():
                     curr = front_cell
                 else:
                     direction = "N"
-                continue
-            if direction == "N":
-                front_cell = (curr[0], curr[1]+1)
+            elif direction == "N":
+                front_cell = (curr[0], curr[1]-1)
                 right_cell = (curr[0]+1, curr[1])
                 if right_cell in getValidMoves(maze, curr).values():
                     direction = "E"
+                    curr = right_cell
                 elif front_cell in getValidMoves(maze, curr).values():
                     curr = front_cell
                 else:
                     direction = "W"
-                continue
-            if direction == "W":
+            elif direction == "W":
                 front_cell = (curr[0]-1, curr[1])
-                right_cell = (curr[0], curr[1]+1)
+                right_cell = (curr[0], curr[1]-1)
                 if right_cell in getValidMoves(maze, curr).values():
                     direction = "N"
+                    curr = right_cell
                 elif front_cell in getValidMoves(maze, curr).values():
                     curr = front_cell
                 else:
                     direction = "S"
-                continue
-            print()
+            path[curr[1]][curr[0]] = 1
+
+    
 
 
         duration = (perf_counter() - start)*1000
