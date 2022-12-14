@@ -30,11 +30,13 @@ class Solver:
         grid = [[0 for i in range(Maze.size[0])]for j in range(Maze.size[1])]
         queue = collections.deque()
         queue.append((0,0))
+        visited[(0,0)] = None
 
         while queue:
             curr = queue.pop()
-            graph([curr])
             if curr == maze.end:
+                plt.xlabel(f"{[x for x in queue]}")
+                graph([curr])
                 break
 
             moves = getValidMoves(maze, curr)
@@ -42,6 +44,9 @@ class Solver:
                 if move not in visited:
                     queue.appendleft(move)
                     visited[move] = curr
+
+            plt.xlabel(f"{[x for x in queue]}")
+            graph([curr])
 
 
         grid[curr[1]][curr[0]] = 1
@@ -68,6 +73,7 @@ class Solver:
                 curr = neighbors[dir]
 
             path.append(curr)
+            graph([curr])
 
         grid = [[0 for i in range(maze.size[0])] for j in range(maze.size[1])]
         for x, y in path:
@@ -100,6 +106,5 @@ class Solver:
 
 if __name__ == "__main__":
     maze = Maze()
-    print(maze.grid)
     sol = Solver()
     sol.bfs(maze)
