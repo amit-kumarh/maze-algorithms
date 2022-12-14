@@ -37,7 +37,6 @@ class Maze():
 
 
     def new_maze(self):
-        print("new maze")
         self.grid = Maze.get_maze_from_text("./sample.txt")
 
         
