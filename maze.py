@@ -1,6 +1,7 @@
 import collections
 import numpy as np
 import random
+import collections
 
 class Maze():
     size = (79,49)
@@ -35,9 +36,78 @@ class Maze():
         cells of the chosen frontier cell and add them to the frontier list. Remove the chosen frontier cell from the
         list of frontier cells. """
 
+    def recursive_random_maze() -> "list[list[bool]]":
+        maze_x: int = int((Maze.size[0]-1)/2)
+        maze_y: int = int((Maze.size[1]-1)/2)
+
+        print(maze_x, maze_y)
+        
+
+
+        grid  = [[1 for _ in range(Maze.size[1])]for _ in range(Maze.size[0])]
+        
+        
+        current = (random.randint(0,maze_y), random.randint(0,maze_x), "S")
+        visited = []
+        path = []
+
+
+        def get_options(current):
+            options = []
+            if current[1] != 0:
+                options.append((current[0], current[1]-1, "N"))
+            if current[0] != 0:
+                options.append((current[0] - 1, current[1], "W"))
+            if current[1] < maze_y-1:
+                options.append((current[0], current[1]+1, "S"))
+            if current[0] < maze_x-1:
+                options.append((current[0]+1, current[1], "E"))
+
+            return options
+
+        def dfs(current, visited):
+
+            loc = (current[0], current[1])
+            if loc not in visited:
+                visited.append(loc)
+                path.append(current)
+                options = get_options(current)
+                if options == None:
+                    return
+                random.shuffle(options)
+                for option in options:
+                    dfs(option, visited)
+
+
+        dfs(current, visited)
+
+        for x,y,dir in path:
+
+            print(x,y)
+            grid_x = 2*x + 1
+            grid_y = 2*y + 1
+            if dir == "N":
+                grid[grid_x][grid_y] = 0
+                grid[grid_x][grid_y+1] = 0
+            elif dir == "E":
+                grid[grid_x][grid_y] = 0
+                grid[grid_x-1][grid_y] = 0
+            elif dir == "S":
+                print(grid_x,grid_y)
+                grid[grid_x][grid_y] = 0
+                grid[grid_x][grid_y-1] = 0
+            elif dir == "W":
+                grid[grid_x][grid_y] = 0
+                grid[grid_x + 1][grid_y] = 0
+
+
+
+        return grid
 
     def new_maze(self):
         self.grid = Maze.get_maze_from_text("./sample.txt")
+        self.grid = Maze.recursive_random_maze()
+
 
         
     def get_maze_from_text(filename: str):

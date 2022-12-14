@@ -7,7 +7,7 @@ from time import perf_counter
 
 
 ADJACENT = {'N': (0, -1), 'S': (0, 1), 'E':(1, 0), 'W':(-1, 0)}
-def getValidMoves(maze, cell):
+def getValidMoves(maze: Maze, cell):
     neighbors = {}
     dirs = []
     for d, (i, j) in ADJACENT.items():
