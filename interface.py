@@ -120,6 +120,15 @@ class Interface:
                     wall = pygame.Rect(wall_loc, wall_size)
                     pygame.draw.rect(self.display, black, wall)
 
+    def draw_new_maze(self):
+        caption = pygame.font.Font('freesansbold.ttf', 30).render('Press [n] for a new maze', True, black, light_grey)
+        caption_rect = caption.get_rect()
+        caption_rect.center = (self.get_x_center(), 75*BLOCK_SIZE - 20)
+        self.display.blit(caption, caption_rect)
+        
+
+
+
 
 
     def draw_solution(self, solution, duration) -> None:
@@ -193,6 +202,7 @@ class Interface:
         
         self.draw_algos(cur_algo)
         self.draw_solution(*solution)
+        self.draw_new_maze()
         
        
 

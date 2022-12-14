@@ -28,10 +28,15 @@ class Runner():
                     self.cur_algo -= 1
                 if event.key == K_RETURN:
                     self.algo_selected = True
+                if event.key == K_n:
+                    self.maze.new_maze()
+                    self.solution = (None, 0)
             if self.cur_algo > Solver.n_algos-1:
                 self.cur_algo = Solver.n_algos-1
             if self.cur_algo < 0:
                 self.cur_algo = 0
+            
+
 
             
     def push_updates(self) -> None:

@@ -36,6 +36,9 @@ class Maze():
         list of frontier cells. """
 
 
+    def new_maze(self):
+        print("new maze")
+        self.grid = Maze.get_maze_from_text("./sample.txt")
 
         
     def get_maze_from_text(filename: str):
