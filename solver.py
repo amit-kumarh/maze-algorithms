@@ -31,12 +31,13 @@ class Solver:
         queue = collections.deque()
         queue.append((0,0))
         visited[(0,0)] = None
+        img_num = 1
 
         while queue:
             curr = queue.pop()
             if curr == maze.end:
                 plt.xlabel(f"{[x for x in queue]}")
-                graph([curr])
+                graph(f'bfs/{img_num}.png', [curr], queue)
                 break
 
             moves = getValidMoves(maze, curr)
@@ -45,8 +46,8 @@ class Solver:
                     queue.appendleft(move)
                     visited[move] = curr
 
-            plt.xlabel(f"{[x for x in queue]}")
-            graph([curr])
+            graph(f'bfs/{img_num}.png', [curr], queue)
+            img_num += 1
 
 
         grid[curr[1]][curr[0]] = 1
@@ -65,6 +66,7 @@ class Solver:
         dir = None
         path = []
         path.append(curr)
+        img_num = 0
         while curr != maze.end:
             neighbors = getValidMoves(maze, curr)
             if len(neighbors) > 2 or dir not in neighbors:
@@ -74,8 +76,10 @@ class Solver:
                 curr = neighbors[dir]
 
             path.append(curr)
-            graph([curr])
+            graph(f'mouse/{img_num}.png', [curr])
+            img_num += 1
 
+        graph(f'mouse/{img_num}.png', [curr])
         grid = [[0 for i in range(maze.size[0])] for j in range(maze.size[1])]
         for x, y in path:
             grid[y][x] = 1
@@ -153,4 +157,4 @@ class Solver:
 if __name__ == "__main__":
     maze = Maze()
     sol = Solver()
-    sol.bfs(maze)
+    sol.mouse(maze)

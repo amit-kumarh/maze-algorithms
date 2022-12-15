@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 
-def graph(points=[]):
+def graph(path, points=[], queue=None):
     with open('demo_maze.txt', 'r') as f:
         grid = eval(f.read())
 
@@ -8,12 +8,15 @@ def graph(points=[]):
         grid[x][y] = 2
 
 
+    fig = plt.figure()
     plt.pcolormesh(grid)
-    plt.gca().set_aspect('equal')
+    fig.gca().set_aspect('equal')
+    fig.gca().invert_yaxis()
     plt.xticks([]) # remove the tick marks by setting to an empty list
     plt.yticks([]) # remove the tick marks by setting to an empty list
-    plt.gca().invert_yaxis()
-    plt.show()
+    if queue:
+        plt.xlabel(f"{[x for x in queue]}")
+    fig.savefig(path, dpi=300)
 
 if __name__ == '__main__':
     graph([(0, 0), (1, 0)])
