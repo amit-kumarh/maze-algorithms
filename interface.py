@@ -121,7 +121,7 @@ class Interface:
                     pygame.draw.rect(self.display, black, wall)
 
     def draw_new_maze(self):
-        caption = pygame.font.Font('freesansbold.ttf', 30).render('Press [n] for a new maze', True, black, light_grey)
+        caption = pygame.font.Font('freesansbold.ttf', 30).render('Press [n] for a new DFS maze, or [m] for a Prim\'s maze', True, black, light_grey)
         caption_rect = caption.get_rect()
         caption_rect.center = (self.get_x_center(), 75*BLOCK_SIZE - 20)
         self.display.blit(caption, caption_rect)

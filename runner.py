@@ -31,6 +31,9 @@ class Runner():
                 if event.key == K_n:
                     self.maze.new_maze()
                     self.solution = (None, 0)
+                if event.key == K_m:
+                    self.maze.new_maze(True)
+                    self.solution = (None, 0)
             if self.cur_algo > Solver.n_algos-1:
                 self.cur_algo = Solver.n_algos-1
             if self.cur_algo < 0:

@@ -9,7 +9,7 @@ class Maze():
 
     def __init__(self):
         # self.grid = Maze.get_random_maze(Maze) 
-        self.grid = Maze.get_maze_from_text("./sample.txt")
+        self.grid = Maze.recursive_random_maze(False)
         self.start = (0, 0)
         self.end = (Maze.size[0]-1, Maze.size[1]-1)
 
@@ -36,7 +36,7 @@ class Maze():
         cells of the chosen frontier cell and add them to the frontier list. Remove the chosen frontier cell from the
         list of frontier cells. """
 
-    def recursive_random_maze() -> "list[list[bool]]":
+    def recursive_random_maze(prim) -> "list[list[bool]]":
         maze_x: int = int((Maze.size[0]-1)/2)
         maze_y: int = int((Maze.size[1]-1)/2)
         
@@ -74,12 +74,27 @@ class Maze():
                 for option in options:
                     dfs(option, visited)
 
+        def bfs(start):
+            get_loc = lambda x: (x[0], x[1])
+            loc = get_loc(start)
+            curr = start
+            q = [curr]
+            visited.append(loc)
+            while q:
+                curr = q.pop(random.randint(0, len(q)-1))
+                path.append(curr)
+                options = get_options(curr)
+                for option in options:
+                    if get_loc(option) not in visited:
+                        q.append(option)
+                        visited.append(get_loc(option))
 
-        dfs(current, visited)
+        if prim:
+            bfs(current)
+        else:
+            dfs(current, visited)
 
         for x,y,dir in path:
-
-
             grid_x = 2*x + 1
             grid_y = 2*y + 1
             if dir == "N":
@@ -103,9 +118,8 @@ class Maze():
 
         return grid
 
-    def new_maze(self):
-        self.grid = Maze.get_maze_from_text("./sample.txt")
-        self.grid = Maze.recursive_random_maze()
+    def new_maze(self, prim=False):
+        self.grid = Maze.recursive_random_maze(prim)
 
 
         
