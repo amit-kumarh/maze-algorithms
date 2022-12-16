@@ -74,25 +74,7 @@ class Maze():
                 for option in options:
                     dfs(option, visited)
 
-        def bfs(start):
-            get_loc = lambda x: (x[0], x[1])
-            loc = get_loc(start)
-            curr = start
-            q = [curr]
-            visited.append(loc)
-            while q:
-                curr = q.pop(random.randint(0, len(q)-1))
-                path.append(curr)
-                options = get_options(curr)
-                for option in options:
-                    if get_loc(option) not in visited:
-                        q.append(option)
-                        visited.append(get_loc(option))
-
-        if prim:
-            bfs(current)
-        else:
-            dfs(current, visited)
+        dfs(current, visited)
 
         for x,y,dir in path:
             grid_x = 2*x + 1
@@ -122,6 +104,54 @@ class Maze():
         self.grid = Maze.recursive_random_maze(prim)
 
 
+    def prim(self):
+        TWO_AWAY = [(-2, 0), (2, 0), (0, 2), (0, -2)]
+        def get_frontiers(curr):
+            frontiers = []
+            for dx, dy in TWO_AWAY:
+                nx, ny = curr[0] + dx, curr[1] + dy
+                if 0 <= nx < Maze.size[0] and 0 <= ny < Maze.size[1]:
+                    if grid[nx][ny] == 1:
+                        frontiers.append((nx, ny))
+            return frontiers
+
+        def get_neighbors(curr):
+            neighbors = []
+            for dx, dy in TWO_AWAY:
+                nx, ny = curr[0] + dx, curr[1] + dy
+                if 0 <= nx < Maze.size[0] and 0 <= ny < Maze.size[1]:
+                    if grid[nx][ny] == 0:
+                        neighbors.append((nx, ny))
+            return neighbors
+
+        def midpoint(frontier, neighbor):
+            fx, fy = frontier
+            nx, ny = neighbor
+            return ((fx+nx)//2, (fy+ny)//2)
+
+        def connect(frontier, neighbor):
+            mx, my = midpoint(frontier, neighbor)
+            grid[mx][my] = 0
+
+        grid  = [[1 for j in range(Maze.size[1])] for i in range(Maze.size[0])]
+        curr = (random.randint(1,Maze.size[0]-2), random.randint(1,Maze.size[1]-2))
+        grid[curr[0]][curr[1]] = 0
+        q = get_frontiers(curr)
+        while q:
+            curr = q.pop(random.randint(0, len(q)-1))
+            if grid[curr[0]][curr[1]] == 1:
+                grid[curr[0]][curr[1]] = 0
+                neighbors = get_neighbors(curr)
+                n = random.choice(neighbors)
+                connect(curr, n)
+                for f in get_frontiers(curr):
+                    q.append(f)
+
+        grid[0][0] = 0
+        grid[1][0] = 0
+        grid[Maze.size[0]-1][Maze.size[1]-1] = 0
+        grid[Maze.size[0]-2][Maze.size[1]-1] = 0
+        self.grid = grid
         
     def get_maze_from_text(filename: str):
         maze = np.zeros((Maze.size))
