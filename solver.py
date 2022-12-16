@@ -95,6 +95,7 @@ class Solver:
 
         direction = "N"
         path[curr[1]][curr[0]] = 1
+        img_num = 0
         while curr != maze.end:
 
             if direction == "S":
@@ -139,6 +140,8 @@ class Solver:
                 else:
                     direction = "S"
             path[curr[1]][curr[0]] = 1
+            graph(f'walls/{img_num}.png', [curr])
+            img_num += 1
 
     
 
@@ -157,4 +160,4 @@ class Solver:
 if __name__ == "__main__":
     maze = Maze()
     sol = Solver()
-    sol.mouse(maze)
+    sol.wall_follow(maze)

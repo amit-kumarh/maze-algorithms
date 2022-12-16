@@ -11,12 +11,13 @@ def graph(path, points=[], queue=None):
     fig = plt.figure()
     plt.pcolormesh(grid)
     fig.gca().set_aspect('equal')
-    fig.gca().invert_yaxis()
+    # fig.gca().invert_yaxis()
     plt.xticks([]) # remove the tick marks by setting to an empty list
     plt.yticks([]) # remove the tick marks by setting to an empty list
     if queue:
         plt.xlabel(f"{[x for x in queue]}")
     fig.savefig(path, dpi=300)
+    plt.close()
 
 if __name__ == '__main__':
     graph([(0, 0), (1, 0)])
