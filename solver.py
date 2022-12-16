@@ -92,10 +92,11 @@ class Solver:
         path = [[0 for _ in range(Maze.size[0])]for _ in range(Maze.size[1])]
 
         curr = maze.start
+        graph(f'walls/0.png', [curr])
 
         direction = "N"
         path[curr[1]][curr[0]] = 1
-        img_num = 0
+        img_num = 1
         while curr != maze.end:
 
             if direction == "S":
